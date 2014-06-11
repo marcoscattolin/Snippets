@@ -46,6 +46,13 @@ text(x,y,pos=3, labels=as.character(1:12))
 #set data frame
 dataFrame <- data.frame(x=x,y=y)
 
+# Determine optimal number of clusters --> look for elbow in the diagram
+wss <- (nrow(mydata)-1)*sum(apply(mydata,2,var))
+for (i in 2:15) wss[i] <- sum(kmeans(mydata, centers=i)$withinss)
+plot(1:15, wss, type="b", xlab="Number of Clusters",ylab="Within groups sum of squares")
+
+
+
 #calculate clustering with 3 centers
 kmeansObj <- kmeans(dataFrame, centers=3)
 kmeansObj
